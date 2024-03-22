@@ -44,7 +44,6 @@ import SubmitButton from '@/components/SubmitButton.vue';
 export default {
     data() {
         return {
-            profle: {},
             name: "",
             address1: "",
             address2: "",
@@ -69,67 +68,22 @@ export default {
           'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
           'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
         ],
-
-       
             
         };
     },
 
-    created() {
-        this.fetchProfile();
-    },
-    
-    /*
-    created() {
-        console.log("test");
-        fetch('http://127.0.0.1:8000/api/profile_mgmt', {mode: "no-cors"})
-        .then(response => {
-            if (!response.ok) {
-                console.log(response);
-            throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-
-    },
-    */
-    
-
     methods: {
-
-        async fetchProfile() {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/profile_mgmt');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        handleSubmit() {
+            const zipSr = String(this.zipcode);
+            if (zipSr.length < 5 || zipSr.length > 9) {
+                this.zipcodeError = "Zipcode must be 5 to 9 characters long!";
+                return;
+            }
+    
+            this.zipcodeError = "";
+            console.log("profile form updated")
         }
-        const data = await response.json();
-        this.profile = data;
-        console.log(data);
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
     },
-
-
-    handleSubmit() {
-        const zipSr = String(this.zipcode);
-        if (zipSr.length < 5 || zipSr.length > 9) {
-            this.zipcodeError = "Zipcode must be 5 to 9 characters long!";
-            return;
-        }
-
-        this.zipcodeError = "";
-        console.log("profile form updated");
-    }
-},
-
 
     components: {
     SubmitButton,
